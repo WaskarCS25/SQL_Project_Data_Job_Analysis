@@ -1,0 +1,83 @@
+/*
+    What are the top skills based on salary
+    - Look at the average salary associated with each skill for data analyst position
+    - focuses on roles with specified salary, regardless of location
+    - why? it reavelas how differect skills impact salary levels for data analyst and
+      helps identify the most finnacially rewarding skills to adquire or improve
+
+*/
+
+SELECT
+    skills,
+    ROUND (AVG(salary_year_avg),0)   AS avg_salary
+FROM  job_postings_fact
+INNER JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
+INNER JOIN skills_dim  ON skills_job_dim.skill_id = skills_dim.skill_id
+WHERE
+    job_title_short = 'Data Analyst'
+    AND salary_year_avg IS NOT NULL 
+    -- AND job_work_from_home IS TRUE
+GROUP BY
+    skills 
+ORDER BY
+    avg_salary DESC
+LIMIT 25
+
+/*
+
+Here are some concise, data-driven insights you could include in a report or dashboard.
+
+Top Paying Skills - Key Trends
+AI and Machine Learning dominate the highest-paying skills.
+Frameworks such as PyTorch ($125k), TensorFlow ($121k), Keras ($127k), MXNet ($149k), DataRobot ($155k), and Hugging Face ($124k) suggest that employers pay a premium for analysts with machine learning and generative AI capabilities.
+Data engineering skills command high salaries.
+Technologies like Kafka ($130k), Airflow ($116k), Cassandra ($118k), and Couchbase ($161k) indicate strong demand for professionals who can build and maintain scalable data pipelines.
+Cloud and DevOps knowledge is increasingly valuable.
+Skills such as Terraform ($147k), Ansible ($124k), GitLab ($134k), Bitbucket ($117k), and VMware ($148k) demonstrate that modern data analysts benefit from understanding cloud infrastructure and deployment workflows.
+Programming remains a major salary driver.
+Languages including Golang ($155k), Scala ($115k), Perl ($125k), and Solidity ($179k) appear among the highest-paying skills, reflecting the value of strong software engineering capabilities.
+Specialized niche technologies receive premium compensation.
+Skills such as Solidity, DataRobot, and Couchbase have very high average salaries because they are relatively rare and often required in specialized industries.
+Version control and collaboration tools also appear in the top 25.
+GitLab, Bitbucket, Atlassian, and even SVN highlight that employers value collaborative software development practices alongside analytical expertise.
+Outlier warning: SVN ($400k).
+SVN's average salary is dramatically higher than every other skill and is likely influenced by a very small number of high-paying job postings. It should be treated as an outlier rather than representative of the market.
+Top Paying Jobs - Key Trends
+Leadership roles offer the highest compensation.
+Positions such as Director of Analytics ($336k) and Associate Director – Data Insights ($256k) show that salaries increase substantially with managerial and strategic responsibilities.
+Principal-level analysts consistently earn over $180k.
+Multiple Principal Data Analyst positions range between $186k–205k, indicating a clear salary premium for senior technical expertise.
+Specialization increases earning potential.
+Roles such as Data Analyst, Marketing ($232k) and ERM Data Analyst ($184k) suggest that domain expertise (marketing, finance, risk management, healthcare, autonomous vehicles) is highly valued.
+Remote work does not appear to reduce salaries.
+Every job listed is located "Anywhere", demonstrating that high-paying remote opportunities remain available for experienced data professionals.
+The highest salaries combine technical and business skills.
+The best-paid positions are not purely analytical—they require communication, leadership, business strategy, and decision-making alongside technical expertise.
+Most top-paying jobs are senior-level positions.
+Titles including Principal, Director, and Associate Director dominate the list, suggesting that experience and leadership are major factors in achieving top compensation.
+
+Extreme outlier: Mantys Data Analyst ($650k).
+
+The $650,000 salary is far above the rest of the distribution and likely represents either:
+an unusually specialized role,
+total compensation including equity,
+or an anomalous data point.
+
+It should not be interpreted as the typical salary for data analysts.
+
+Overall Market Insights
+
+Your data suggests three major trends:
+
+The modern data analyst is becoming increasingly technical.
+Employers reward expertise in machine learning, data engineering, cloud computing, and software development—not just SQL and Excel.
+Career progression matters more than technical skills alone.
+The highest salaries are associated with leadership titles (Director, Principal), indicating that combining technical expertise with business impact and management capabilities yields the greatest financial rewards.
+Specialization creates a competitive advantage.
+Analysts who develop expertise in AI, cloud infrastructure, or industry-specific domains (marketing analytics, healthcare, finance, autonomous systems) can command significantly higher salaries than generalist analysts.
+
+These findings indicate that the highest-paying data analyst careers increasingly sit at the intersection of analytics, software engineering, machine learning, and business leadership, rather than traditional reporting and dashboard development.
+
+
+
+*/
